@@ -1,55 +1,49 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
-
-import Colors from '../../constants/Colors';
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import { Stack, Tabs } from "expo-router";
+import colors from "../../assets/colors"
+import HomeIcon from "../../assets/icons/home";
+import HealthIcon from "../../assets/icons/health";
+import DiaryIcon from "../../assets/icons/diary";
+import ProfileIcon from "../../assets/icons/profile";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import PrimaryButton from "../../components/PrimaryButton";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    return (
+        <Tabs initialRouteName="home">
+            <Tabs.Screen name="home"
+                options={{
+                    tabBarActiveTintColor: colors.light.primary,
+                    tabBarInactiveTintColor: colors.light.tabIconDefault,
+                    title: "Kezdőlap",
+                    tabBarLabelStyle: { fontFamily: 'inter-medium', fontSize: 10},
+                    tabBarIcon: () => <HomeIcon />,
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+                }} />
+            <Tabs.Screen name="health"
+                options={{
+                    tabBarActiveTintColor: colors.light.primary,
+                    tabBarInactiveTintColor: colors.light.tabIconDefault,
+                    tabBarLabelStyle: {fontFamily: 'inter-medium', fontSize: 10},
+                    title: "Egészség",
+                    tabBarIcon: () => <HealthIcon />,
+                }} />           
+
+            <Tabs.Screen name="diary"
+                options={{
+                    tabBarActiveTintColor: colors.light.primary,
+                    tabBarInactiveTintColor: colors.light.tabIconDefault,
+                    tabBarLabelStyle: { fontFamily: 'inter-medium', fontSize: 10},
+                    title: "Napló",
+                    tabBarIcon: () => <DiaryIcon />
+                }} />
+            <Tabs.Screen name="profile"
+                options={{
+                    tabBarActiveTintColor: colors.light.primary,
+                    tabBarInactiveTintColor: colors.light.tabIconDefault,
+                    tabBarLabelStyle: {fontFamily: 'inter-medium', fontSize: 10},
+                    title: "Profil",
+                    tabBarIcon: () => <ProfileIcon />
+                }} />
+        </Tabs>
+    )
 }
