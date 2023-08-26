@@ -34,8 +34,6 @@ const contextInitialState: ContextInterface = {
 	signOut: () => { }
 }
 
-
-
 export const AuthContext = createContext(contextInitialState);
 
 export function useAuth(): ContextInterface {

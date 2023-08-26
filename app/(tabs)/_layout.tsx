@@ -9,7 +9,7 @@ import PrimaryButton from "../../components/PrimaryButton";
 
 export default function TabLayout() {
     return (
-        <Tabs initialRouteName="home">
+        <Tabs>
             <Tabs.Screen name="home"
                 options={{
                     tabBarActiveTintColor: colors.light.primary,

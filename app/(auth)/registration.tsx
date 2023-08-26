@@ -4,7 +4,7 @@ import style from '../../assets/style'
 import colors from '../../assets/colors'
 import PrimaryButton from '../../components/PrimaryButton'
 import { Link } from 'expo-router'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { FIREBASE_AUTH, db } from '../../firebaseConfig'
 
@@ -18,12 +18,13 @@ const registration = () => {
   const createUser = async () => {
     try {
       const userCredential = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
-      .then((data) => {
-        addDoc(docRef, {
-          uid: data.user.uid,
-          email: data.user.email
-        })
-      })
+      const user = (await userCredential).user;
+      const userRef = doc(db, 'users', user.uid);
+      const userData = {
+        email: email
+      };
+
+      await setDoc(userRef,userData)
 
       console.log('User registered:' + userCredential)
     } catch (error: any) {
