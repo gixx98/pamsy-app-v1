@@ -19,7 +19,8 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     marginTop:100,
     padding: 20,
-    backgroundColor: '#FAFAFA'
+    backgroundColor: '#fff',
+    height: '100%'
   },
   body: {
     fontFamily: 'inter-regular',

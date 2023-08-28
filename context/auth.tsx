@@ -1,9 +1,9 @@
 import { router, useRootNavigationState, useSegments } from 'expo-router';
 import { onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
-import { FIREBASE_AUTH } from '../firebaseConfig';
+import { FIREBASE_AUTH, db } from '../firebaseConfig';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { addDoc, collection, getDocs, setDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
+import { ActivityIndicator } from 'react-native';
 
 const initialState = {
 	uid: "",
@@ -58,19 +58,20 @@ function useProtectedRoute(user: User) {
 
 		const inAuthGroup = segments[0] === "(auth)";
 
-		if (user) console.log("user", user)
-
 		if (!user.uid && !inAuthGroup) {
 			router.replace("/(auth)/login");
 			setHasNavigated(true);
 		} else if (user.uid && inAuthGroup) {
-			router.replace("/(tabs)/home")
+			// onBoardingCompleted ? router.replace("/(tabs)/home") : router.replace("/(onboarding)/welcome")
+			// router.replace("/(tabs)/home")
 		}
 	}, [user.uid, segments, navigationState, hasNavigated])
 }
 
 export function AuthProvider({ children }: React.PropsWithChildren): JSX.Element {
 	const [user, setUser] = useState<User>(initialState);
+	
+	let isLoading = true;
 
 	//every time that we change the user useProtectedRoute function will be called
 	//the program will validate if we still have a user
@@ -80,7 +81,18 @@ export function AuthProvider({ children }: React.PropsWithChildren): JSX.Element
 	//and will watch every changes and at the same time set the collected 
 	useEffect(() => {
 		const unsubscribeAuth = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+			let onboardingCompleted;
 			if (user) {
+				const userDocRef = doc(db, 'users', user.uid);
+				const userDocSnapshot = await getDoc(userDocRef);
+
+				if (userDocSnapshot.exists()) {
+					const userDataFromFirestore = userDocSnapshot.data();
+					onboardingCompleted = userDataFromFirestore.onboardingCompleted;
+					
+					isLoading = false;
+				}
+
 				const userData: User = {
 					uid: user.providerData[0].uid,
 					email: user.providerData[0].email!,
@@ -91,7 +103,18 @@ export function AuthProvider({ children }: React.PropsWithChildren): JSX.Element
 				};
 				console.log("user:" + user);
 				setUser(userData);
-				router.replace("/(tabs)/home");
+
+				if (isLoading) {
+					console.log("Loading");
+				} else {
+					console.log("onboardingCompleted before navigation " + onboardingCompleted);
+					if (onboardingCompleted) {
+						router.replace("/(tabs)/home");
+					} else {
+						router.replace("/(onboarding)/welcome")
+					}
+				}
+
 			} else {
 				console.log("user is not authenticated");
 				router.replace("/(auth)/login")
