@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
-import { Link } from 'expo-router'
+import { router } from 'expo-router'
 import colors from '../../assets/colors'
 import PrimaryButton from '../../components/PrimaryButton'
 import { getAuth } from 'firebase/auth'
 import { doc, collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebaseConfig'
+import { useNavigation } from '@react-navigation/native'
 
 const welcome = () => {
+  const navigation:any = useNavigation();
   const speciesOptions = ['Kutya', 'Macska'];
   const [selectedSpecies, setSelectedSpecies] = useState('');
 
@@ -16,9 +18,10 @@ const welcome = () => {
 
   const addPetToFirestore = async (userUID: any, species:any) => {
     const userPetsRef = collection(db, `users/${userUID}` ,'pets');
-    await addDoc(userPetsRef, {species, createdAt: new Date()})
-  }
+    const response = await addDoc(userPetsRef, {species, createdAt: new Date()});
 
+    navigation.navigate('name', {petId: response.id, userId: userUID});
+  }
   const handleSpeciesSelection = (species: string) => {
     setSelectedSpecies(species);
   };
@@ -59,8 +62,8 @@ const welcome = () => {
           ))}
         </View>
       </View>
-      <View style={{ flex: 1, flexDirection:'column-reverse', marginHorizontal: 16}}>
-        <PrimaryButton title='Következő' onPress={() => addPetToFirestore(user?.uid, selectedSpecies)} />
+      <View style={{ flex: 1, flexDirection:'column-reverse', marginHorizontal: 16, marginBottom: 8}}>
+        <PrimaryButton title='Következő' disabled={selectedSpecies === ''} onPress={() => addPetToFirestore(user?.uid, selectedSpecies)} />
       </View>
     </SafeAreaView>
   )

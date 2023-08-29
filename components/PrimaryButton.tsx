@@ -3,9 +3,9 @@ import { TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native';
 import colors from '../assets/colors';
 
 const PrimaryButton = (props:any) => {
-  const {onPress, title} = props
+  const {onPress, title, disabled} = props
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <TouchableOpacity onPress={onPress} style={[styles.button, disabled && styles.disabledbutton]} disabled={disabled}>
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
     color: 'white', // Text color
     textAlign: 'center',
   },
+  disabledbutton: {
+    backgroundColor: colors.light.subtle,
+    opacity: 0.4
+  }
 });
 
 export default PrimaryButton;

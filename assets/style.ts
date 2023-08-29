@@ -4,14 +4,14 @@ import colors from "../assets/colors"
 export default StyleSheet.create({
   input: {
     width: "100%",
-    height: 40,
+    height: 44,
     borderColor: colors.light.border,
     borderWidth: 1,
     marginBottom: 10,
-    marginTop: 4,
-    paddingLeft: 10,
+    marginTop: 16,
+    paddingLeft: 12,
     borderRadius: 12,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FAFAFA'
   },
   container: {
     flex: 1,
