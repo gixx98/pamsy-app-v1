@@ -5,9 +5,11 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { doc, updateDoc } from 'firebase/firestore';
 import style from '../../assets/style';
 import PrimaryButton from '../../components/PrimaryButton';
+import colors from '../../assets/colors';
+
 
 const breed = () => {
-	const navigation:any = useNavigation();
+	const navigation: any = useNavigation();
 	const route: any = useRoute();
 	const petId = route.params?.petId;
 	const userId = route.params?.userId;
@@ -23,7 +25,8 @@ const breed = () => {
 		// Update Firestore with the selected breed
 		const petDocRef = doc(db, `users/${userId}/pets/${petId}`);
 		await updateDoc(petDocRef, { breed });
-		navigation.navigate('birthday')
+
+		navigation.navigate('birthday', { petId: petId, userId: userId })
 
 	};
 
@@ -33,8 +36,16 @@ const breed = () => {
 
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: '#FFF', height: "100%" }}>
-			<View style={{ flex: 5, marginHorizontal: 16 }}>
+			<View style={{ marginHorizontal: 16 }}>
+				<Text style={{
+					color: '#1E1E2A',
+					fontFamily: 'inter-bold',
+					fontSize: 24,
+					marginTop: 16
+				}}>Milyen fajta?</Text>
+			</View>
 
+			<View style={{ flex: 5, marginHorizontal: 16 }}>
 				<TextInput
 					style={style.input}
 					placeholder='Próbáld ki: Tacskó'
@@ -52,7 +63,10 @@ const breed = () => {
 							]}
 							onPress={() => setSelectedBreed(item)}
 						>
-							<Text>{item}</Text>
+							<Text style={[
+								styles.breedText,
+								selectedBreed === item && styles.selectedBreedText
+							]}>{item}</Text>
 						</TouchableOpacity>
 					)}
 					keyExtractor={(item) => item}
@@ -72,14 +86,24 @@ const styles = StyleSheet.create({
 	breedOption: {
 		fontFamily: 'inter-medium',
 		padding: 10,
-		borderWidth: 1,
-		borderColor: '#ccc',
-		borderRadius: 5,
-		marginVertical: 5,
+		height: 44,
+		backgroundColor: '#F4F4F4',
+		borderRadius: 12,
+		marginVertical: 4,
 		alignItems: 'center',
+		justifyContent: 'center'
 	},
 
 	selectedBreedOption: {
-		backgroundColor: '#F0F0F0'
+		backgroundColor: colors.light.primary
+	},
+
+	breedText: {
+		fontFamily: 'inter-medium',
+		color: colors.light.text
+	},
+
+	selectedBreedText: {
+		color: '#FFF'
 	}
 })

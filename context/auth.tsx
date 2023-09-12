@@ -3,6 +3,7 @@ import { onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWith
 import { FIREBASE_AUTH, db } from '../firebaseConfig';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native';
 
 const initialState = {
@@ -52,23 +53,30 @@ function useProtectedRoute(user: User) {
 	const [hasNavigated, setHasNavigated] = useState(false);
 
 	useEffect(() => {
+		console.log("useProtectedRoute useEffect called");
+
 		if (navigationState != null) {
+			console.log("Navigation state is null")
 			if (!navigationState.key) return;
 		}
 
 		const inAuthGroup = segments[0] === "(auth)";
+		console.log("inAuthGroup is " + inAuthGroup);
 
 		if (!user.uid && !inAuthGroup) {
+			console.log("Navigating to login");
 			router.replace("/(auth)/login");
 			setHasNavigated(true);
 		} else if (user.uid && inAuthGroup) {
 			// onBoardingCompleted ? router.replace("/(tabs)/home") : router.replace("/(onboarding)/welcome")
-			// router.replace("/(tabs)/home")
+			// router.replace("/home")
+			console.log("Not doing anything");
 		}
 	}, [user.uid, segments, navigationState, hasNavigated])
 }
 
 export function AuthProvider({ children }: React.PropsWithChildren): JSX.Element {
+	const navigation = useNavigation();
 	const [user, setUser] = useState<User>(initialState);
 	
 	let isLoading = true;
@@ -80,17 +88,24 @@ export function AuthProvider({ children }: React.PropsWithChildren): JSX.Element
 	//this hook will make a subscription to the firebase function onAuthStateChange
 	//and will watch every changes and at the same time set the collected 
 	useEffect(() => {
+		console.log("AuthProvider useEffect called");
 		const unsubscribeAuth = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
 			let onboardingCompleted;
+			console.log("onAuthStateChange called")
 			if (user) {
 				const userDocRef = doc(db, 'users', user.uid);
-				const userDocSnapshot = await getDoc(userDocRef);
-
-				if (userDocSnapshot.exists()) {
-					const userDataFromFirestore = userDocSnapshot.data();
-					onboardingCompleted = userDataFromFirestore.onboardingCompleted;
-					
-					isLoading = false;
+				try {
+					const userDocSnapshot = await getDoc(userDocRef);
+				
+					if (userDocSnapshot.exists()) {
+						const userDataFromFirestore = userDocSnapshot.data();
+						onboardingCompleted = userDataFromFirestore.onboardingCompleted;
+						
+						isLoading = false;
+					}
+				} catch (error) {
+					// Handle the error here
+					console.error("Error fetching user document from Firestore:", error);
 				}
 
 				const userData: User = {
@@ -109,8 +124,10 @@ export function AuthProvider({ children }: React.PropsWithChildren): JSX.Element
 				} else {
 					console.log("onboardingCompleted before navigation " + onboardingCompleted);
 					if (onboardingCompleted) {
+						console.log("AuthProviderből navigálok a homera")
 						router.replace("/(tabs)/home");
 					} else {
+						console.log("AuthProviderből navigálok a welcomra")
 						router.replace("/(onboarding)/welcome")
 					}
 				}

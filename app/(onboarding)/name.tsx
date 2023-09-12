@@ -37,7 +37,7 @@ const name = () => {
           color: '#1E1E2A',
           fontFamily: 'inter-bold',
           fontSize: 24,
-          marginVertical: 16
+          marginVertical: 8
         }}>Mi a kedvenced neve?</Text>
         <Text style={{
           fontFamily: 'inter-regular',
@@ -51,7 +51,7 @@ const name = () => {
           onChangeText={(text: any) => setName(text)}
         />
       </View>
-      <KeyboardAvoidingView keyboardVerticalOffset={height} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, flexDirection: 'column-reverse', marginHorizontal: 16, marginBottom: 8}}>
+      <KeyboardAvoidingView keyboardVerticalOffset={height + 8} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, flexDirection: 'column-reverse', marginHorizontal: 16, marginBottom: 8}}>
         <PrimaryButton title='Következő' disabled={name === ''} onPress={() => updatePetName(userId,petId,name)} />
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     borderColor: colors.light.border,
     borderWidth: 1,
     marginBottom: 10,
-    marginTop: 16,
+    marginTop: 4,
     paddingLeft: 12,
     borderRadius: 12,
     backgroundColor: '#FAFAFA'

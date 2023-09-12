@@ -47,7 +47,7 @@ export default function login(): JSX.Element {
       <View style={{flexDirection: 'row', marginTop:4}}>
         <Text style={{marginRight: 4,fontFamily:'inter-regular', color:colors.light.text}}>Nincs még fiókod?</Text> 
         <Link href="/registration" style={{}}>
-          <Text style={{color:'#0645AD', fontFamily:'inter-medium'}}>Regisztrálj egyet</Text>
+          <Text style={{color:'#0645AD', fontFamily:'inter-medium'}}>Regisztrálj most!</Text>
         </Link>
       </View>
 

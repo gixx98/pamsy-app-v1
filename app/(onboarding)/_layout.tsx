@@ -1,6 +1,4 @@
 import { Stack, router } from "expo-router";
-import ChevronLeftIcon from "../../assets/icons/chevronLeft";
-import { TouchableOpacity } from "react-native";
 
 export default function TabLayout() {
     return (
@@ -27,6 +25,13 @@ export default function TabLayout() {
                 }} />
                 <Stack.Screen
                 name="birthday"
+                options={{
+                    headerBackVisible: false,
+                    headerTitle: "Kisállat hozzáadása",
+                    headerTitleStyle: { fontFamily: 'inter-medium', color: '#1E1E2A' }
+                }} />
+                <Stack.Screen
+                name="gender"
                 options={{
                     headerBackVisible: false,
                     headerTitle: "Kisállat hozzáadása",

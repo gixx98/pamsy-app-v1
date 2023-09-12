@@ -17,14 +17,16 @@ const registration = () => {
 
   const createUser = async () => {
     try {
-      const userCredential = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
+      const userCredential = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
       const user = (await userCredential).user;
       const userRef = doc(db, 'users', user.uid);
       const userData = {
-        email: email
+        email: email,
+        onboardingCompleted: false
       };
 
-      await setDoc(userRef,userData)
+      await setDoc(userRef,userData);
+      
 
       console.log('User registered:' + userCredential)
     } catch (error: any) {
@@ -59,6 +61,7 @@ const registration = () => {
         style={style.input}
         placeholder='*******'
         secureTextEntry
+        textContentType='none'
         onChangeText={(text) => setPassword(text)}
       />
 

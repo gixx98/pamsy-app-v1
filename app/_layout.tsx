@@ -20,11 +20,12 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  console.log("NEW APPLICATION STARTS")
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     "inter-regular": require('../assets/fonts/Inter-Regular.ttf'),
     "inter-medium": require('../assets/fonts/Inter-Medium.ttf'),
-    "inter-semibold": require('../assets/fonts/Inter-SemiBold.ttf'),
+    "inter-semiBold": require('../assets/fonts/Inter-SemiBold.ttf'),
     "inter-bold": require('../assets/fonts/Inter-Bold.ttf'),
     ...FontAwesome.font,
   });
