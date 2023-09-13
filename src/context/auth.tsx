@@ -1,6 +1,6 @@
 import { router, useRootNavigationState, useSegments } from 'expo-router';
 import { onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
-import { FIREBASE_AUTH, db } from '../firebaseConfig';
+import { FIREBASE_AUTH, db } from '../../firebaseConfig';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -116,8 +116,9 @@ export function AuthProvider({ children }: React.PropsWithChildren): JSX.Element
 					createdAt: user.metadata.creationTime!,
 					lastLoginAt: user.metadata.lastSignInTime!
 				};
-				console.log("user:" + user);
 				setUser(userData);
+
+				console.log("user:" + user.uid);
 
 				if (isLoading) {
 					console.log("Loading");

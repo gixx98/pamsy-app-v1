@@ -6,7 +6,7 @@ import PrimaryButton from '../../components/PrimaryButton'
 import { Link } from 'expo-router'
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { FIREBASE_AUTH, db } from '../../firebaseConfig'
+import { FIREBASE_AUTH, db } from '../../../firebaseConfig'
 
 
 const registration = () => {

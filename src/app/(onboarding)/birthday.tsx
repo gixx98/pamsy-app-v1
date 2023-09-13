@@ -4,7 +4,7 @@ import DatePicker from 'react-native-date-picker'
 import colors from '../../assets/colors'
 import PrimaryButton from '../../components/PrimaryButton'
 import { useHeaderHeight } from '@react-navigation/elements'
-import { db } from '../../firebaseConfig'
+import { db } from '../../../firebaseConfig'
 import { Timestamp, doc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { useNavigation, useRoute } from '@react-navigation/native'
 

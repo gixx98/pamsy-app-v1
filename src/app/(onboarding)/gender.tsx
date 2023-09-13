@@ -4,7 +4,7 @@ import colors from '../../assets/colors'
 import PrimaryButton from '../../components/PrimaryButton';
 import {useRoute } from '@react-navigation/native';
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import { db } from '../../../firebaseConfig';
 import { router } from 'expo-router';
 
 const gender = () => {

@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import { db } from '../../firebaseConfig';
+import { db } from '../../../firebaseConfig';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { doc, updateDoc } from 'firebase/firestore';
 import style from '../../assets/style';

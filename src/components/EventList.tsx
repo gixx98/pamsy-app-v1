@@ -1,6 +1,6 @@
 import { View, Text, ActivityIndicator, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { db } from '../firebaseConfig';
+import { db } from '../../firebaseConfig';
 import { QuerySnapshot, collection, getDocs } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 

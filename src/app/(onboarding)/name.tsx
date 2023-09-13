@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import colors from '../../assets/colors';
 import style from '../../assets/style';
 import PrimaryButton from '../../components/PrimaryButton';
-import { db } from '../../firebaseConfig';
+import { db } from '../../../firebaseConfig';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useHeaderHeight } from '@react-navigation/elements'
 

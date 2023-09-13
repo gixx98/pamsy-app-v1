@@ -5,7 +5,7 @@ import colors from '../../assets/colors'
 import PrimaryButton from '../../components/PrimaryButton';
 import { Link } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { FIREBASE_AUTH } from '../../firebaseConfig';
+import { FIREBASE_AUTH } from '../../../firebaseConfig';
 
 export default function login(): JSX.Element {
   const [email, setEmail] = useState('');

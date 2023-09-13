@@ -4,7 +4,7 @@ import EventList from '../../components/EventList'
 import { AuthContext } from '../../context/auth'
 import { getAuth, User } from "firebase/auth";
 import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
-import { db } from '../../firebaseConfig'
+import { db } from '../../../firebaseConfig'
 import PlusIcon from '../../assets/icons/plus'
 import colors from '../../assets/colors'
 import ModalComponent from '../../components/Modal'
@@ -20,36 +20,36 @@ const home = () => {
   const [selectedElement, setSelectedElement] = useState(null);
 
   useEffect(() => {
-    getUser();
+    getPetDoc();
   }, []);
 
-  const getUser = async () => {
-    try {
-      const auth = getAuth();
-      setUser(auth.currentUser);
+  // const getUser = async () => {
+  //   try {
+  //     const auth = getAuth();
+  //     return auth.currentUser ? auth.currentUser.uid : null
+  //     setUser(auth.currentUser);
       
-      if (user) {
-        // User is authenticated, and you can access user properties.
-        console.log('User is logged in:', user.uid);
-        getPetDoc();
-      } else {
-        // User is not authenticated.
-        console.log('User is not logged in.');
-      }
-    } catch (error) {
-      console.error('Error checking user authentication:', error);
-    }
-  };
+  //     if (user) {
+  //       // User is authenticated, and you can access user properties.
+  //       console.log('User is logged in:', user.uid);
+  //     } else {
+  //       // User is not authenticated.
+  //       console.log('User is not logged in.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error checking user authentication:', error);
+  //   }
+  // };
 
   const getPetDoc = async () => {
-      console.log("ASD")
-      if(user){
-        const snapshot = collection(db, `users/${user.uid}/pets`);
-        console.log(snapshot)
-        setPet(snapshot.id);
-        console.log(snapshot.id)
-        return snapshot.id;
-      }
+      // if(user){
+        console.log(user?.uid)
+        
+        const querySnapshot = await getDocs(collection(db, `users/${user?.uid}/pets`));
+        querySnapshot.forEach((doc) => {
+          console.log("Pet id: " + doc.id + " " + doc.data())
+        })
+      // }
   };
   
   const openModal = () => {

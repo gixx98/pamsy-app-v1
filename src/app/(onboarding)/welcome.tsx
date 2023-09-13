@@ -5,7 +5,7 @@ import colors from '../../assets/colors'
 import PrimaryButton from '../../components/PrimaryButton'
 import { getAuth } from 'firebase/auth'
 import { doc, collection, addDoc } from 'firebase/firestore';
-import { db } from '../../firebaseConfig'
+import { db } from '../../../firebaseConfig'
 import { useNavigation } from '@react-navigation/native'
 
 const welcome = () => {
